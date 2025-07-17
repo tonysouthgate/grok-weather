@@ -200,38 +200,51 @@
                 } mm`;
 
                 // Update Davis card
-                const davisObs = davisData.sensors?.[0]?.data?.[0] || {};
-                const tempF = davisObs.temp || 0;
+                const davisSensors = davisData.sensors || [];
+                let outdoorObs = {};
+                let barObs = {};
+
+                davisSensors.forEach(sensor => {
+                    if (sensor.sensor_type === 37) {
+                        outdoorObs = sensor.data[0] || {};
+                    }
+                    if (sensor.sensor_type === 242) {
+                        barObs = sensor.data[0] || {};
+                    }
+                });
+
+                const tempF = outdoorObs.temp || 0;
                 const tempC = (tempF - 32) * 5 / 9;
-                const dewF = davisObs.dew_point || 0;
+                const dewF = outdoorObs.dew_point || 0;
                 const dewC = (dewF - 32) * 5 / 9;
-                const pressureInHg = davisObs.bar_sea_level || 0;
+                const pressureInHg = barObs.bar_sea_level || 0;
                 const pressureHPa = pressureInHg * 33.8639;
-                const windSpeedMph = davisObs.wind_speed_last || 0;
-                const windDir = davisObs.wind_dir_last || '--';
-                const humidity = davisObs.hum || '--';
-                const rainIn = davisObs.rainfall_last_24_hr_in || 0;
+                const windSpeedMph = outdoorObs.wind_speed_last || 0;
+                const windDir = outdoorObs.wind_dir_last || '--';
+                const humidity = outdoorObs.hum || '--';
+                const rainIn = outdoorObs.rainfall_last_24_hr_in || 0;
                 const rainMm = rainIn * 25.4;
 
                 let windDirText = '--';
                 if (windDir !== '--') {
-                    if (windDir > 337.5 || windDir <= 22.5) windDirText = 'N';
-                    else if (windDir <= 67.5) windDirText = 'NE';
-                    else if (windDir <= 112.5) windDirText = 'E';
-                    else if (windDir <= 157.5) windDirText = 'SE';
-                    else if (windDir <= 202.5) windDirText = 'S';
-                    else if (windDir <= 247.5) windDirText = 'SW';
-                    else if (windDir <= 292.5) windDirText = 'W';
+                    const dir = Number(windDir);
+                    if (dir > 337.5 || dir <= 22.5) windDirText = 'N';
+                    else if (dir <= 67.5) windDirText = 'NE';
+                    else if (dir <= 112.5) windDirText = 'E';
+                    else if (dir <= 157.5) windDirText = 'SE';
+                    else if (dir <= 202.5) windDirText = 'S';
+                    else if (dir <= 247.5) windDirText = 'SW';
+                    else if (dir <= 292.5) windDirText = 'W';
                     else windDirText = 'NW';
                 }
 
-                document.getElementById('davis-temp').textContent = `${tempC.toFixed(1) || '--'} °C`;
-                document.getElementById('davis-dew').textContent = `${dewC.toFixed(1) || '--'} °C`;
-                document.getElementById('davis-pressure').textContent = `${pressureHPa.toFixed(1) || '--'} hPa`;
-                document.getElementById('davis-wind-speed').textContent = `${windSpeedMph.toFixed(1) || '--'} mph`;
+                document.getElementById('davis-temp').textContent = `${tempC.toFixed(1)} °C`;
+                document.getElementById('davis-dew').textContent = `${dewC.toFixed(1) } °C`;
+                document.getElementById('davis-pressure').textContent = `${pressureHPa.toFixed(1)} hPa`;
+                document.getElementById('davis-wind-speed').textContent = `${windSpeedMph.toFixed(1)} mph`;
                 document.getElementById('davis-wind-dir').textContent = `${windDir}° (${windDirText})`;
                 document.getElementById('davis-humidity').textContent = `${humidity} %`;
-                document.getElementById('davis-rain').textContent = `${rainMm.toFixed(1) || '--'} mm`;
+                document.getElementById('davis-rain').textContent = `${rainMm.toFixed(1)} mm`;
 
                 // Calculate and update Mean card
                 const meanTemp = ((Number(tempestObs.air_temperature) || 0) + tempC) / 2;
@@ -261,10 +274,6 @@
             }
         }
 
-        window.onload = fetchWeatherData;
-    </script>
-</body>
-</html>
         window.onload = fetchWeatherData;
     </script>
 </body>
