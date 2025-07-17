@@ -46,7 +46,7 @@ exports.handler = async (event, context) => {
       throw new Error(`WeatherLink API Error: ${response.status} - ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const responseData = await response.json();
 
     return {
       statusCode: 200,
@@ -54,7 +54,7 @@ exports.handler = async (event, context) => {
         ...headers,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(responseData),
     };
   } catch (error) {
     console.error('Davis API Error:', error);
