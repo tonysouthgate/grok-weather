@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌤️ Halstead Place Weather</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .glass:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-6 text-cyan-300 drop-shadow-lg">🌤️ Halstead Place Weather</h1>
+    <p id="loading" class="text-base sm:text-lg mb-4 text-gray-300">Loading weather data...</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl w-full">
+        <div class="glass rounded-lg p-4 sm:p-6 shadow-lg transition-all duration-300">
+            <h2 class="text-xl sm:text-2xl font-semibold text-cyan-200 mb-3">Tempest Station</h2>
+            <div class="space-y-3 animate-fade-in">
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌡️ Temperature</span>
+                    <span id="tempest-temp">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Dew Point</span>
+                    <span id="tempest-dew">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌊 Pressure</span>
+                    <span id="tempest-pressure">-- hPa</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💨 Wind Speed</span>
+                    <span id="tempest-wind-speed">-- mph</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🧭 Wind Dir</span>
+                    <span id="tempest-wind-dir">--° (--)</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Humidity</span>
+                    <span id="tempest-humidity">-- %</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌧️ 24hr Rain</span>
+                    <span id="tempest-rain">-- mm</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass rounded-lg p-4 sm:p-6 shadow-lg transition-all duration-300">
+            <h2 class="text-xl sm:text-2xl font-semibold text-cyan-200 mb-3">Davis Vantage Pro2</h2>
+            <div class="space-y-3 animate-fade-in">
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌡️ Temperature</span>
+                    <span id="davis-temp">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Dew Point</span>
+                    <span id="davis-dew">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌊 Pressure</span>
+                    <span id="davis-pressure">-- hPa</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💨 Wind Speed</span>
+                    <span id="davis-wind-speed">-- mph</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🧭 Wind Dir</span>
+                    <span id="davis-wind-dir">--° (--)</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Humidity</span>
+                    <span id="davis-humidity">-- %</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌧️ 24hr Rain</span>
+                    <span id="davis-rain">-- mm</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass rounded-lg p-4 sm:p-6 shadow-lg transition-all duration-300">
+            <h2 class="text-xl sm:text-2xl font-semibold text-purple-300 mb-3">Mean Values</h2>
+            <div class="space-y-3 animate-fade-in">
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌡️ Temperature</span>
+                    <span id="mean-temp" class="font-bold">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Dew Point</span>
+                    <span id="mean-dew" class="font-bold">-- °C</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌊 Pressure</span>
+                    <span id="mean-pressure" class="font-bold">-- hPa</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💨 Wind Speed</span>
+                    <span id="mean-wind-speed" class="font-bold">-- mph</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🧭 Wind Dir</span>
+                    <span id="mean-wind-dir" class="font-bold">--° (--)</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>💧 Humidity</span>
+                    <span id="mean-humidity" class="font-bold">-- %</span>
+                </div>
+                <div class="flex justify-between items-center text-sm sm:text-lg">
+                    <span>🌧️ 24hr Rain</span>
+                    <span id="mean-rain" class="font-bold">-- mm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchWeatherData() {
+            let errorMessage = 'Error loading weather data';
+            let tempestData = {};
+            let davisData = {};
+            let hasData = false;
+
+            try {
+                // Fetch Davis data
+                console.log('Fetching Davis data from /.netlify/functions/davis-weather');
+                const davisResponse = await fetch('/.netlify/functions/davis-weather');
+                if (!davisResponse.ok) {
+                    throw new Error(`Davis API error: ${davisResponse.status} - ${davisResponse.statusText}`);
+                }
+                davisData = await davisResponse.json();
+                console.log('Davis data:', davisData);
+            } catch (error) {
+                console.error('Davis fetch failed:', error.message);
+                errorMessage += `: Davis - ${error.message}`;
+            }
+
+            try {
+                // Fetch Tempest data
+                console.log('Fetching Tempest data from https://swd.weatherflow.com/swd/rest/observations/station/140578');
+                const tempestResponse = await fetch(
+                    'https://swd.weatherflow.com/swd/rest/observations/station/140578?api_token=02ec898b-0bad-4bc6-8517-dfc35cf3d845'
+                    // Replace with new token if generated
+                );
+                if (!tempestResponse.ok) {
+                    throw new Error(`Tempest API error: ${tempestResponse.status} - ${tempestResponse.statusText}`);
+                }
+                tempestData = await tempestResponse.json();
+                console.log('Tempest data:', tempestData);
+            } catch (error) {
+                console.error('Tempest fetch failed:', error.message);
+                errorMessage += `: Tempest - ${error.message}`;
+            }
+
+            try {
+                // Update Tempest card
+                const tempestObs = tempestData.observations?.[0] || {};
+                document.getElementById('tempest-temp').textContent = `${
+                    tempestObs.air_temperature || '--'
+                } °C`;
+                document.getElementById('tempest-dew').textContent = `${
+                    tempestObs.dew_point || '--'
+                } °C`;
+                document.getElementById('tempest-pressure').textContent = `${
+                    tempestObs.station_pressure || '--'
+                } hPa`;
+                document.getElementById('tempest-wind-speed').textContent = `${
+                    tempestObs.wind_avg || '--'
+                } mph`;
+                document.getElementById('tempest-wind-dir').textContent = `${
+                    tempestObs.wind_direction || '--'
+                }° (${tempestObs.wind_direction_text || '--'})`;
+                document.getElementById('tempest-humidity').textContent = `${
+                    tempestObs.relative_humidity || '--'
+                } %`;
+                document.getElementById('tempest-rain').textContent = `${
+                    tempestObs.precip_accum_local_day || '--'
+                } mm`;
+
+                // Update Davis card
+                const davisObs = davisData.sensors?.[0]?.data?.[0] || {};
+                document.getElementById('davis-temp').textContent = `${
+                    davisObs.temp_c || '--'
+                } °C`;
+                document.getElementById('davis-dew').textContent = `${
+                    davisObs.dew_point || '--'
+                } °C`;
+                document.getElementById('davis-pressure').textContent = `${
+                    davisObs.pressure || '--'
+                } hPa`;
+                document.getElementById('davis-wind-speed').textContent = `${
+                    davisObs.wind_speed_avg || '--'
+                } mph`;
+                document.getElementById('davis-wind-dir').textContent = `${
+                    davisObs.wind_dir || '--'
+                }° (${davisObs.wind_dir_text || '--'})`;
+                document.getElementById('davis-humidity').textContent = `${
+                    davisObs.humidity || '--'
+                } %`;
+                document.getElementById('davis-rain').textContent = `${
+                    davisObs.rain_24hr_mm || '--'
+                } mm`;
+
+                // Calculate and update Mean card
+                const meanTemp = ((Number(tempestObs.air_temperature) || 0) + (Number(davisObs.temp_c) || 0)) / 2;
+                document.getElementById('mean-temp').textContent = Number.isFinite(meanTemp) ? `${meanTemp.toFixed(1)} °C` : '-- °C';
+                const meanDew = ((Number(tempestObs.dew_point) || 0) + (Number(davisObs.dew_point) || 0)) / 2;
+                document.getElementById('mean-dew').textContent = Number.isFinite(meanDew) ? `${meanDew.toFixed(1)} °C` : '-- °C';
+                const meanPressure = ((Number(tempestObs.station_pressure) || 0) + (Number(davisObs.pressure) || 0)) / 2;
+                document.getElementById('mean-pressure').textContent = Number.isFinite(meanPressure) ? `${meanPressure.toFixed(1)} hPa` : '-- hPa';
+                const meanWindSpeed = ((Number(tempestObs.wind_avg) || 0) + (Number(davisObs.wind_speed_avg) || 0)) / 2;
+                document.getElementById('mean-wind-speed').textContent = Number.isFinite(meanWindSpeed) ? `${meanWindSpeed.toFixed(1)} mph` : '-- mph';
+                const meanWindDir = ((Number(tempestObs.wind_direction) || 0) + (Number(davisObs.wind_dir) || 0)) / 2;
+                document.getElementById('mean-wind-dir').textContent = Number.isFinite(meanWindDir) ? `${meanWindDir.toFixed(0)}° (--)` : '--° (--)';
+                const meanHumidity = ((Number(tempestObs.relative_humidity) || 0) + (Number(davisObs.humidity) || 0)) / 2;
+                document.getElementById('mean-humidity').textContent = Number.isFinite(meanHumidity) ? `${meanHumidity.toFixed(1)} %` : '-- %';
+                const meanRain = ((Number(tempestObs.precip_accum_local_day) || 0) + (Number(davisObs.rain_24hr_mm) || 0)) / 2;
+                document.getElementById('mean-rain').textContent = Number.isFinite(meanRain) ? `${meanRain.toFixed(1)} mm` : '-- mm';
+
+                // Hide loading message if at least one fetch succeeded
+                if (tempestObs.air_temperature || davisObs.temp_c) {
+                    document.getElementById('loading').style.display = 'none';
+                } else {
+                    document.getElementById('loading').textContent = errorMessage;
+                }
+            } catch (error) {
+                console.error('Update failed:', error.message);
+                document.getElementById('loading').textContent = errorMessage;
+            }
+        }
+
+        window.onload = fetchWeatherData;
+    </script>
+</body>
+</html>
