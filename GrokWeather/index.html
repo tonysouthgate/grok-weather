@@ -161,7 +161,7 @@
                 // Fetch Tempest data
                 console.log('Fetching Tempest data from https://swd.weatherflow.com/swd/rest/observations/station/140578');
                 const tempestResponse = await fetch(
-                    'https://swd.weatherflow.com/swd/rest/observations/station/140578?api_token=dea82af5-986e-4d9b-bbcc-a5099278ceed'
+                    'https://swd.weatherflow.com/swd/rest/observations/station/140578?token=dea82af5-986e-4d9b-bbcc-a5099278ceed'
                 );
                 if (!tempestResponse.ok) {
                     throw new Error(`Tempest API error: ${tempestResponse.status} - ${tempestResponse.statusText}`);
