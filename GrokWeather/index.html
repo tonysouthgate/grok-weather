@@ -176,7 +176,7 @@
 
             try {
                 // Update Tempest card
-                const tempestObs = tempestData.observations?.[0] || {};
+                const tempestObs = tempestData.obs?.[0] || {};
                 document.getElementById('tempest-temp').textContent = `${
                     tempestObs.air_temperature || '--'
                 } °C`;
