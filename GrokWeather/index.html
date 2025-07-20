@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,14 @@
         .glass:active {
             transform: scale(0.98);
             transition: transform 0.1s ease;
+        }
+        #loading {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -177,27 +186,20 @@
             try {
                 // Update Tempest card
                 const tempestObs = tempestData.obs?.[0] || {};
-                document.getElementById('tempest-temp').textContent = `${
-                    tempestObs.air_temperature || '--'
-                } °C`;
-                document.getElementById('tempest-dew').textContent = `${
-                    tempestObs.dew_point || '--'
-                } °C`;
-                document.getElementById('tempest-pressure').textContent = `${
-                    tempestObs.station_pressure || '--'
-                } hPa`;
-                document.getElementById('tempest-wind-speed').textContent = `${
-                    tempestObs.wind_avg || '--'
-                } mph`;
-                document.getElementById('tempest-wind-dir').textContent = `${
-                    tempestObs.wind_direction || '--'
-                }° (${tempestObs.wind_direction_text || '--'})`;
-                document.getElementById('tempest-humidity').textContent = `${
-                    tempestObs.relative_humidity || '--'
-                } %`;
-                document.getElementById('tempest-rain').textContent = `${
-                    tempestObs.precip_accum_local_day || '--'
-                } mm`;
+                const tempTemp = Number(tempestObs.air_temperature) || 0;
+                document.getElementById('tempest-temp').textContent = `${tempTemp.toFixed(1)} °C`;
+                const tempDew = Number(tempestObs.dew_point) || 0;
+                document.getElementById('tempest-dew').textContent = `${tempDew.toFixed(1)} °C`;
+                const tempPress = Number(tempestObs.station_pressure) || 0;
+                document.getElementById('tempest-pressure').textContent = `${tempPress.toFixed(1)} hPa`;
+                const tempWind = Number(tempestObs.wind_avg) || 0;
+                document.getElementById('tempest-wind-speed').textContent = `${tempWind.toFixed(1)} mph`;
+                const tempDir = Number(tempestObs.wind_direction) || 0;
+                document.getElementById('tempest-wind-dir').textContent = `${tempDir.toFixed(1)}° (${tempestObs.wind_direction_text || '--'})`;
+                const tempHum = Number(tempestObs.relative_humidity) || 0;
+                document.getElementById('tempest-humidity').textContent = `${tempHum.toFixed(1)} %`;
+                const tempRain = Number(tempestObs.precip_accum_local_day) || 0;
+                document.getElementById('tempest-rain').textContent = `${tempRain.toFixed(1)} mm`;
 
                 // Update Davis card
                 const davisSensors = davisData.sensors || [];
@@ -220,13 +222,13 @@
                 const pressureInHg = barObs.bar_sea_level || 0;
                 const pressureHPa = pressureInHg * 33.8639;
                 const windSpeedMph = outdoorObs.wind_speed_last || 0;
-                const windDir = outdoorObs.wind_dir_last || '--';
-                const humidity = outdoorObs.hum || '--';
+                const windDir = outdoorObs.wind_dir_last || 0;
+                const humidity = outdoorObs.hum || 0;
                 const rainIn = outdoorObs.rainfall_last_24_hr_in || 0;
                 const rainMm = rainIn * 25.4;
 
                 let windDirText = '--';
-                if (windDir !== '--') {
+                if (windDir !== 0) {
                     const dir = Number(windDir);
                     if (dir > 337.5 || dir <= 22.5) windDirText = 'N';
                     else if (dir <= 67.5) windDirText = 'NE';
@@ -242,24 +244,24 @@
                 document.getElementById('davis-dew').textContent = `${dewC.toFixed(1)} °C`;
                 document.getElementById('davis-pressure').textContent = `${pressureHPa.toFixed(1)} hPa`;
                 document.getElementById('davis-wind-speed').textContent = `${windSpeedMph.toFixed(1)} mph`;
-                document.getElementById('davis-wind-dir').textContent = `${windDir}° (${windDirText})`;
-                document.getElementById('davis-humidity').textContent = `${humidity} %`;
+                document.getElementById('davis-wind-dir').textContent = `${Number(windDir).toFixed(1)}° (${windDirText})`;
+                document.getElementById('davis-humidity').textContent = `${Number(humidity).toFixed(1)} %`;
                 document.getElementById('davis-rain').textContent = `${rainMm.toFixed(1)} mm`;
 
                 // Calculate and update Mean card
-                const meanTemp = ((Number(tempestObs.air_temperature) || 0) + tempC) / 2;
+                const meanTemp = (tempTemp + tempC) / 2;
                 document.getElementById('mean-temp').textContent = Number.isFinite(meanTemp) ? `${meanTemp.toFixed(1)} °C` : '-- °C';
-                const meanDew = ((Number(tempestObs.dew_point) || 0) + dewC) / 2;
+                const meanDew = (tempDew + dewC) / 2;
                 document.getElementById('mean-dew').textContent = Number.isFinite(meanDew) ? `${meanDew.toFixed(1)} °C` : '-- °C';
-                const meanPressure = ((Number(tempestObs.station_pressure) || 0) + pressureHPa) / 2;
+                const meanPressure = (tempPress + pressureHPa) / 2;
                 document.getElementById('mean-pressure').textContent = Number.isFinite(meanPressure) ? `${meanPressure.toFixed(1)} hPa` : '-- hPa';
-                const meanWindSpeed = ((Number(tempestObs.wind_avg) || 0) + windSpeedMph) / 2;
+                const meanWindSpeed = (tempWind + windSpeedMph) / 2;
                 document.getElementById('mean-wind-speed').textContent = Number.isFinite(meanWindSpeed) ? `${meanWindSpeed.toFixed(1)} mph` : '-- mph';
-                const meanWindDir = ((Number(tempestObs.wind_direction) || 0) + Number(windDir) || 0) / 2;
-                document.getElementById('mean-wind-dir').textContent = Number.isFinite(meanWindDir) ? `${meanWindDir.toFixed(0)}° (--)` : '--° (--)';
-                const meanHumidity = ((Number(tempestObs.relative_humidity) || 0) + Number(humidity) || 0) / 2;
+                const meanWindDir = (tempDir + Number(windDir)) / 2;
+                document.getElementById('mean-wind-dir').textContent = Number.isFinite(meanWindDir) ? `${meanWindDir.toFixed(1)}° (--)` : '--° (--)';
+                const meanHumidity = (tempHum + Number(humidity)) / 2;
                 document.getElementById('mean-humidity').textContent = Number.isFinite(meanHumidity) ? `${meanHumidity.toFixed(1)} %` : '-- %';
-                const meanRain = ((Number(tempestObs.precip_accum_local_day) || 0) + rainMm) / 2;
+                const meanRain = (tempRain + rainMm) / 2;
                 document.getElementById('mean-rain').textContent = Number.isFinite(meanRain) ? `${meanRain.toFixed(1)} mm` : '-- mm';
 
                 // Hide loading message if at least one fetch succeeded
@@ -278,3 +280,4 @@
     </script>
 </body>
 </html>
+```
