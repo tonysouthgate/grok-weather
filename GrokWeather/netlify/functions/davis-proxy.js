@@ -37,7 +37,8 @@ exports.handler = async (event, context) => {
     const barSensor = sensors.find(s => s.data[0] && s.data[0].bar_sea_level !== undefined);
     const pressure = barSensor ? barSensor.data[0].bar_sea_level * 33.8639 : null; // inHg to hPa
 
-    // Process data with unit conversions
+    // Process data with unit conversions, preferring rainfall_last_24_hr_in if present (even if zero)
+    const rainIn = oData.rainfall_last_24_hr_in != null ? oData.rainfall_last_24_hr_in : (oData.rainfall_daily_in || 0);
     const davisData = {
       temp: (oData.temp - 32) * 5 / 9, // °F to °C
       dew: (oData.dew_point - 32) * 5 / 9, // °F to °C
@@ -45,7 +46,7 @@ exports.handler = async (event, context) => {
       windSpeed: oData.wind_speed_last, // mph
       windDir: oData.wind_dir_last,
       humidity: oData.hum,
-      rain: (oData.rainfall_last_24_hr_in || oData.rainfall_daily_in || 0) * 25.4, // inches to mm
+      rain: rainIn * 25.4, // inches to mm
       ts: oData.ts
     };
 
