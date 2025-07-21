@@ -15,11 +15,19 @@
             text-align: center;
             color: #2c3e50; /* Dark blue for header */
         }
+        .stations-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
         .station {
-            margin: 20px auto;
+            margin: 20px 0;
             padding: 20px;
             border-radius: 8px;
-            max-width: 600px;
+            flex: 1;
+            min-width: 250px;
         }
         .tempest {
             background-color: #9b59b6; /* Purple for Tempest Station */
@@ -62,106 +70,268 @@
             text-align: center;
             color: #34495e;
         }
+        .last-updated {
+            text-align: center;
+            color: #34495e;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>🌤️ Halstead Place Weather</h1>
     <div class="loading">Loading weather data...</div>
+    <div class="last-updated">Last updated: --</div>
 
-    <div class="station tempest">
-        <h2>Tempest Station</h2>
-        <div class="weather-row">
-            <span>🌡️ Temperature</span>
-            <span>-- °C</span>
+    <div class="stations-container">
+        <div class="station tempest">
+            <h2>Tempest Station</h2>
+            <div class="weather-row">
+                <span>🌡️ Temperature</span>
+                <span class="temp">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Dew Point</span>
+                <span class="dew">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>🌊 Pressure</span>
+                <span class="pressure">-- hPa</span>
+            </div>
+            <div class="weather-row">
+                <span>💨 Wind Speed</span>
+                <span class="wind_speed">-- mph</span>
+            </div>
+            <div class="weather-row">
+                <span>🧭 Wind Dir</span>
+                <span class="wind_dir">--° (--)</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Humidity</span>
+                <span class="humidity">-- %</span>
+            </div>
+            <div class="weather-row">
+                <span>🌧️ 24hr Rain</span>
+                <span class="rain">-- mm</span>
+            </div>
         </div>
-        <div class="weather-row">
-            <span>💧 Dew Point</span>
-            <span>-- °C</span>
+
+        <div class="station davis">
+            <h2>Davis Vantage Pro2</h2>
+            <div class="weather-row">
+                <span>🌡️ Temperature</span>
+                <span class="temp">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Dew Point</span>
+                <span class="dew">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>🌊 Pressure</span>
+                <span class="pressure">-- hPa</span>
+            </div>
+            <div class="weather-row">
+                <span>💨 Wind Speed</span>
+                <span class="wind_speed">-- mph</span>
+            </div>
+            <div class="weather-row">
+                <span>🧭 Wind Dir</span>
+                <span class="wind_dir">--° (--)</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Humidity</span>
+                <span class="humidity">-- %</span>
+            </div>
+            <div class="weather-row">
+                <span>🌧️ 24hr Rain</span>
+                <span class="rain">-- mm</span>
+            </div>
         </div>
-        <div class="weather-row">
-            <span>🌊 Pressure</span>
-            <span>-- hPa</span>
-        </div>
-        <div class="weather-row">
-            <span>💨 Wind Speed</span>
-            <span>-- mph</span>
-        </div>
-        <div class="weather-row">
-            <span>🧭 Wind Dir</span>
-            <span>--° (--)</span>
-        </div>
-        <div class="weather-row">
-            <span>💧 Humidity</span>
-            <span>-- %</span>
-        </div>
-        <div class="weather-row">
-            <span>🌧️ 24hr Rain</span>
-            <span>-- mm</span>
+
+        <div class="station mean">
+            <h2>Mean Values</h2>
+            <div class="weather-row">
+                <span>🌡️ Temperature</span>
+                <span class="temp">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Dew Point</span>
+                <span class="dew">-- °C</span>
+            </div>
+            <div class="weather-row">
+                <span>🌊 Pressure</span>
+                <span class="pressure">-- hPa</span>
+            </div>
+            <div class="weather-row">
+                <span>💨 Wind Speed</span>
+                <span class="wind_speed">-- mph</span>
+            </div>
+            <div class="weather-row">
+                <span>🧭 Wind Dir</span>
+                <span class="wind_dir">--° (--)</span>
+            </div>
+            <div class="weather-row">
+                <span>💧 Humidity</span>
+                <span class="humidity">-- %</span>
+            </div>
+            <div class="weather-row">
+                <span>🌧️ 24hr Rain</span>
+                <span class="rain">-- mm</span>
+            </div>
         </div>
     </div>
 
-    <div class="station davis">
-        <h2>Davis Vantage Pro2</h2>
-        <div class="weather-row">
-            <span>🌡️ Temperature</span>
-            <span>-- °C</span>
-        </div>
-        <div class="weather-row">
-            <span>💧 Dew Point</span>
-            <span>-- °C</span>
-        </div>
-        <div class="weather-row">
-            <span>🌊 Pressure</span>
-            <span>-- hPa</span>
-        </div>
-        <div class="weather-row">
-            <span>💨 Wind Speed</span>
-            <span>-- mph</span>
-        </div>
-        <div class="weather-row">
-            <span>🧭 Wind Dir</span>
-            <span>--° (--)</span>
-        </div>
-        <div class="weather-row">
-            <span>💧 Humidity</span>
-            <span>-- %</span>
-        </div>
-        <div class="weather-row">
-            <span>🌧️ 24hr Rain</span>
-            <span>-- mm</span>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loading = document.querySelector('.loading');
+            const lastUpdated = document.querySelector('.last-updated');
 
-    <div class="station mean">
-        <h2>Mean Values</h2>
-        <div class="weather-row">
-            <span>🌡️ Temperature</span>
-            <span>-- °C</span>
-        </div>
-        <div class="weather-row">
-            <span>💧 Dew Point</span>
-            <span>-- °C</span>
-        </div>
-        <div class="weather-row">
-            <span>🌊 Pressure</span>
-            <span>-- hPa</span>
-        </div>
-        <div class="weather-row">
-            <span>💨 Wind Speed</span>
-            <span>-- mph</span>
-        </div>
-        <div class="weather-row">
-            <span>🧭 Wind Dir</span>
-            <span>--° (--)</span>
-        </div>
-        <div class="weather-row">
-            <span>💧 Humidity</span>
-            <span>-- %</span>
-        </div>
-        <div class="weather-row">
-            <span>🌧️ 24hr Rain</span>
-            <span>-- mm</span>
-        </div>
-    </div>
+            // Davis API configuration
+            const API_KEY = 'bvgu5bfmm99lvfrqhlffy3l8pmpbq26v';
+            const API_SECRET = 'lhcttqhmgxipv3zy8xgupadhbgowwcs1';
+            const STATION_ID = '92193';
+
+            // Tempest API configuration
+            const TEMPEST_API_URL = 'https://swd.weatherflow.com/swd/rest/observations/station/140578?token=02ec898b-0bad-4bc6-8517-dfc35cf3d845';
+
+            // Function to calculate dew point using Magnus approximation (for Tempest)
+            function calculateDewPoint(tempC, humidity) {
+                const a = 17.27;
+                const b = 237.7;
+                const alpha = Math.log(humidity / 100) + (a * tempC) / (b + tempC);
+                return (b * alpha) / (a - alpha);
+            }
+
+            // Function to convert wind direction degrees to text
+            function getWindDirection(degrees) {
+                const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+                const index = Math.round(degrees / 22.5) % 16;
+                return directions[index];
+            }
+
+            // Function to update DOM for a station
+            function updateStation(selector, data) {
+                const rows = document.querySelectorAll(`${selector} .weather-row`);
+                rows[0].querySelector('.temp').textContent = `${data.temp.toFixed(1)} °C`;
+                rows[1].querySelector('.dew').textContent = `${data.dew.toFixed(1)} °C`;
+                rows[2].querySelector('.pressure').textContent = `${data.pressure.toFixed(1)} hPa`;
+                rows[3].querySelector('.wind_speed').textContent = `${data.windSpeed.toFixed(1)} mph`;
+                rows[4].querySelector('.wind_dir').textContent = `${data.windDir}° (${data.windDirText})`;
+                rows[5].querySelector('.humidity').textContent = `${data.humidity} %`;
+                rows[6].querySelector('.rain').textContent = `${data.rain.toFixed(1)} mm`;
+            }
+
+            // Async function to load data
+            async function loadData() {
+                loading.textContent = 'Fetching weather data...';
+                loading.style.display = 'block';
+                lastUpdated.textContent = 'Last updated: --';
+
+                try {
+                    // Fetch Tempest data
+                    const tempestResponse = await fetch(TEMPEST_API_URL);
+                    if (!tempestResponse.ok) throw new Error('Tempest API request failed');
+                    const tempestJson = await tempestResponse.json();
+                    const obs = tempestJson.obs[0];
+                    const tempestData = {
+                        temp: obs.air_temperature,
+                        dew: calculateDewPoint(obs.air_temperature, obs.relative_humidity),
+                        pressure: obs.station_pressure,
+                        windSpeed: obs.wind_avg * 2.23694, // m/s to mph
+                        windDir: obs.wind_direction,
+                        windDirText: getWindDirection(obs.wind_direction),
+                        humidity: obs.relative_humidity,
+                        rain: obs.precip_accum_local_day, // mm
+                        ts: obs.timestamp
+                    };
+
+                    // Update Tempest
+                    updateStation('.tempest', tempestData);
+
+                    // Generate Davis API signature
+                    const t = Math.floor(Date.now() / 1000);
+                    const message = `api-key${API_KEY}station-id${STATION_ID}t${t}`;
+                    const encoder = new TextEncoder();
+                    const key = await crypto.subtle.importKey(
+                        "raw",
+                        encoder.encode(API_SECRET),
+                        { name: "HMAC", hash: "SHA-256" },
+                        false,
+                        ["sign"]
+                    );
+                    const hmacBuffer = await crypto.subtle.sign(
+                        "HMAC",
+                        key,
+                        encoder.encode(message)
+                    );
+                    const signature = Array.from(new Uint8Array(hmacBuffer))
+                        .map(b => b.toString(16).padStart(2, "0"))
+                        .join("");
+
+                    // Fetch Davis data
+                    const davisUrl = `https://api.weatherlink.com/v2/current/${STATION_ID}?api-key=${API_KEY}&api-signature=${signature}&t=${t}`;
+                    const davisResponse = await fetch(davisUrl);
+                    if (!davisResponse.ok) throw new Error('Davis API request failed');
+                    const davisJson = await davisResponse.json();
+                    const sensors = davisJson.sensors;
+
+                    // Find outdoor sensor (with temp, hum, etc.)
+                    const outdoorSensor = sensors.find(s => s.data[0] && s.data[0].temp !== undefined && s.data[0].hum !== undefined);
+                    if (!outdoorSensor) throw new Error('No outdoor sensor found in Davis data');
+                    const oData = outdoorSensor.data[0];
+
+                    // Find pressure (may be in console or baro sensor)
+                    const barSensor = sensors.find(s => s.data[0] && s.data[0].bar_sea_level !== undefined);
+                    const pressure = barSensor ? barSensor.data[0].bar_sea_level * 33.8639 : null; // inHg to hPa
+
+                    const davisData = {
+                        temp: (oData.temp - 32) * 5 / 9, // °F to °C
+                        dew: (oData.dew_point - 32) * 5 / 9, // °F to °C
+                        pressure: pressure || '--',
+                        windSpeed: oData.wind_speed_last, // mph
+                        windDir: oData.wind_dir_last,
+                        windDirText: getWindDirection(oData.wind_dir_last),
+                        humidity: oData.hum,
+                        rain: (oData.rainfall_last_24_hr_in || oData.rainfall_daily_in || 0) * 25.4, // inches to mm
+                        ts: oData.ts
+                    };
+
+                    // Update Davis
+                    updateStation('.davis', davisData);
+
+                    // Calculate mean values
+                    const meanData = {
+                        temp: (tempestData.temp + davisData.temp) / 2,
+                        dew: (tempestData.dew + davisData.dew) / 2,
+                        pressure: (tempestData.pressure + davisData.pressure) / 2,
+                        windSpeed: (tempestData.windSpeed + davisData.windSpeed) / 2,
+                        windDir: Math.round((tempestData.windDir + davisData.windDir) / 2),
+                        windDirText: getWindDirection((tempestData.windDir + davisData.windDir) / 2),
+                        humidity: Math.round((tempestData.humidity + davisData.humidity) / 2),
+                        rain: (tempestData.rain + davisData.rain) / 2,
+                        ts: Math.max(tempestData.ts, davisData.ts)
+                    };
+
+                    // Update Mean
+                    updateStation('.mean', meanData);
+
+                    // Update last collected time
+                    const updateTime = new Date(meanData.ts * 1000).toLocaleString();
+                    lastUpdated.textContent = `Last updated: ${updateTime}`;
+
+                    loading.textContent = 'Data loaded!';
+                    setTimeout(() => { loading.style.display = 'none'; }, 1000);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    loading.textContent = 'Failed to load data';
+                }
+            }
+
+            // Initial load
+            loadData();
+
+            // Auto-refresh every 5 minutes (300000 ms)
+            setInterval(loadData, 300000);
+        });
+    </script>
 </body>
 </html>
