@@ -186,7 +186,7 @@
                     const tempestData = {
                         temp: obs.air_temperature.toFixed(1) + ' °C',
                         dew: calculateDewPoint(obs.air_temperature, obs.relative_humidity).toFixed(1) + ' °C',
-                        pressure: obs.station_pressure.toFixed(1) + ' hPa',
+                        pressure: obs.sea_level_pressure.toFixed(1) + ' hPa',
                         windSpeed: (obs.wind_avg * 2.23694).toFixed(1) + ' mph',
                         windDir: obs.wind_direction + '° (' + getWindDirection(obs.wind_direction) + ')',
                         humidity: obs.relative_humidity + ' %',
@@ -230,7 +230,7 @@
                     // Calculate mean values
                     const meanTemp = ((obs.air_temperature + davisJson.temp) / 2).toFixed(1) + ' °C';
                     const meanDew = ((calculateDewPoint(obs.air_temperature, obs.relative_humidity) + davisJson.dew) / 2).toFixed(1) + ' °C';
-                    const meanPressure = ((obs.station_pressure + davisJson.pressure) / 2).toFixed(1) + ' hPa';
+                    const meanPressure = ((obs.sea_level_pressure + davisJson.pressure) / 2).toFixed(1) + ' hPa';
                     const meanWindSpeed = (((obs.wind_avg * 2.23694) + davisJson.windSpeed) / 2).toFixed(1) + ' mph';
                     const meanWindDirDeg = Math.round((obs.wind_direction + davisJson.windDir) / 2);
                     const meanWindDir = meanWindDirDeg + '° (' + getWindDirection(meanWindDirDeg) + ')';
