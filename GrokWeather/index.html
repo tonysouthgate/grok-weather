@@ -15,56 +15,56 @@
             text-align: center;
             color: #2c3e50; /* Dark blue for header */
         }
-        .stations-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
+        .weather-table {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            border-collapse: collapse;
         }
-        .station {
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 8px;
-            flex: 1;
-            min-width: 250px;
+        .weather-table th, .weather-table td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
         }
-        .tempest {
-            background-color: #9b59b6; /* Purple for Tempest Station */
+        .weather-table th.metric, .weather-table td.metric {
+            text-align: left;
+        }
+        .weather-table th.tempest, .weather-table td.tempest {
+            background-color: #9b59b6; /* Purple for Tempest */
             color: white;
         }
-        .davis {
-            background-color: #2c3e50; /* Black/dark navy for Davis Vantage Pro2 */
+        .weather-table th.davis, .weather-table td.davis {
+            background-color: #2c3e50; /* Black/dark navy for Davis */
             color: #2ecc71; /* Green text for Davis */
         }
-        .mean {
-            background-color: #7f8c8d; /* Gray for Mean Values */
+        .weather-table th.mean, .weather-table td.mean {
+            background-color: #7f8c8d; /* Gray for Mean */
             color: white;
         }
-        .weather-row {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
+        .weather-table tbody tr:nth-child(odd) td.tempest {
+            background-color: rgba(155, 89, 182, 0.9); /* Adjusted odd row for Tempest */
         }
-        .tempest .weather-row:nth-child(odd) {
-            background-color: rgba(255, 255, 255, 0.2); /* Light overlay for odd rows */
+        .weather-table tbody tr:nth-child(even) td.tempest {
+            background-color: #9b59b6; /* Even row for Tempest */
         }
-        .tempest .weather-row:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0.1); /* Darker overlay for even rows */
+        .weather-table tbody tr:nth-child(odd) td.davis {
+            background-color: rgba(46, 64, 83, 0.9); /* Adjusted odd row for Davis */
         }
-        .davis .weather-row:nth-child(odd) {
-            background-color: rgba(255, 255, 255, 0.1); /* Subtle light overlay for odd rows */
+        .weather-table tbody tr:nth-child(even) td.davis {
+            background-color: #2c3e50; /* Even row for Davis */
         }
-        .davis .weather-row:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0.2); /* Darker overlay for even rows */
+        .weather-table tbody tr:nth-child(odd) td.mean {
+            background-color: rgba(127, 140, 141, 0.9); /* Adjusted odd row for Mean */
         }
-        .mean .weather-row:nth-child(odd) {
-            background-color: rgba(255, 255, 255, 0.2); /* Light overlay for odd rows */
+        .weather-table tbody tr:nth-child(even) td.mean {
+            background-color: #7f8c8d; /* Even row for Mean */
         }
-        .mean .weather-row:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0.1); /* Darker overlay for even rows */
+        .logo {
+            margin-bottom: 5px;
+        }
+        .logo img {
+            max-height: 50px; /* Uniform height to prevent misalignment */
+            width: auto;
         }
         .loading {
             text-align: center;
@@ -75,14 +75,6 @@
             color: #34495e;
             margin-top: 10px;
         }
-        .logo {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .logo img {
-            max-width: 200px;
-            height: auto;
-        }
     </style>
 </head>
 <body>
@@ -90,105 +82,66 @@
     <div class="loading">Loading weather data...</div>
     <div class="last-updated">Last updated: --</div>
 
-    <div class="stations-container">
-        <div class="station tempest">
-            <div class="logo"><img src="https://cdn.brandfetch.io/tempestwx.com/logo.svg" alt="Tempest Logo"></div>
-            <h2>Tempest Station</h2>
-            <div class="weather-row">
-                <span>🌡️ Temperature</span>
-                <span class="temp">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Dew Point</span>
-                <span class="dew">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>🌊 Pressure</span>
-                <span class="pressure">-- hPa</span>
-            </div>
-            <div class="weather-row">
-                <span>💨 Wind Speed</span>
-                <span class="wind_speed">-- mph</span>
-            </div>
-            <div class="weather-row">
-                <span>🧭 Wind Dir</span>
-                <span class="wind_dir">--° (--)</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Humidity</span>
-                <span class="humidity">-- %</span>
-            </div>
-            <div class="weather-row">
-                <span>🌧️ 24hr Rain</span>
-                <span class="rain">-- mm</span>
-            </div>
-        </div>
-
-        <div class="station davis">
-            <div class="logo"><img src="https://cdn.shopify.com/s/files/1/0515/5992/3873/files/3-1_Davis_Logo_Web_White.png?v=1614402315" alt="Davis Logo"></div>
-            <h2>Davis Vantage Pro2</h2>
-            <div class="weather-row">
-                <span>🌡️ Temperature</span>
-                <span class="temp">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Dew Point</span>
-                <span class="dew">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>🌊 Pressure</span>
-                <span class="pressure">-- hPa</span>
-            </div>
-            <div class="weather-row">
-                <span>💨 Wind Speed</span>
-                <span class="wind_speed">-- mph</span>
-            </div>
-            <div class="weather-row">
-                <span>🧭 Wind Dir</span>
-                <span class="wind_dir">--° (--)</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Humidity</span>
-                <span class="humidity">-- %</span>
-            </div>
-            <div class="weather-row">
-                <span>🌧️ 24hr Rain</span>
-                <span class="rain">-- mm</span>
-            </div>
-        </div>
-
-        <div class="station mean">
-            <h2>Mean Values</h2>
-            <div class="weather-row">
-                <span>🌡️ Temperature</span>
-                <span class="temp">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Dew Point</span>
-                <span class="dew">-- °C</span>
-            </div>
-            <div class="weather-row">
-                <span>🌊 Pressure</span>
-                <span class="pressure">-- hPa</span>
-            </div>
-            <div class="weather-row">
-                <span>💨 Wind Speed</span>
-                <span class="wind_speed">-- mph</span>
-            </div>
-            <div class="weather-row">
-                <span>🧭 Wind Dir</span>
-                <span class="wind_dir">--° (--)</span>
-            </div>
-            <div class="weather-row">
-                <span>💧 Humidity</span>
-                <span class="humidity">-- %</span>
-            </div>
-            <div class="weather-row">
-                <span>🌧️ 24hr Rain</span>
-                <span class="rain">-- mm</span>
-            </div>
-        </div>
-    </div>
+    <table class="weather-table">
+        <thead>
+            <tr>
+                <th class="metric">Metric</th>
+                <th class="tempest">
+                    <div class="logo"><img src="https://cdn.brandfetch.io/tempestwx.com/logo.svg" alt="Tempest Logo"></div>
+                    Tempest Station
+                </th>
+                <th class="davis">
+                    <div class="logo"><img src="https://cdn.shopify.com/s/files/1/0515/5992/3873/files/3-1_Davis_Logo_Web_White.png?v=1614402315" alt="Davis Logo"></div>
+                    Davis Vantage Pro2
+                </th>
+                <th class="mean">Mean Values</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">🌡️ Temperature</td>
+                <td class="tempest"><span class="temp">-- °C</span></td>
+                <td class="davis"><span class="temp">-- °C</span></td>
+                <td class="mean"><span class="temp">-- °C</span></td>
+            </tr>
+            <tr>
+                <td class="metric">💧 Dew Point</td>
+                <td class="tempest"><span class="dew">-- °C</span></td>
+                <td class="davis"><span class="dew">-- °C</span></td>
+                <td class="mean"><span class="dew">-- °C</span></td>
+            </tr>
+            <tr>
+                <td class="metric">🌊 Pressure</td>
+                <td class="tempest"><span class="pressure">-- hPa</span></td>
+                <td class="davis"><span class="pressure">-- hPa</span></td>
+                <td class="mean"><span class="pressure">-- hPa</span></td>
+            </tr>
+            <tr>
+                <td class="metric">💨 Wind Speed</td>
+                <td class="tempest"><span class="wind_speed">-- mph</span></td>
+                <td class="davis"><span class="wind_speed">-- mph</span></td>
+                <td class="mean"><span class="wind_speed">-- mph</span></td>
+            </tr>
+            <tr>
+                <td class="metric">🧭 Wind Dir</td>
+                <td class="tempest"><span class="wind_dir">--° (--)</span></td>
+                <td class="davis"><span class="wind_dir">--° (--)</span></td>
+                <td class="mean"><span class="wind_dir">--° (--)</span></td>
+            </tr>
+            <tr>
+                <td class="metric">💧 Humidity</td>
+                <td class="tempest"><span class="humidity">-- %</span></td>
+                <td class="davis"><span class="humidity">-- %</span></td>
+                <td class="mean"><span class="humidity">-- %</span></td>
+            </tr>
+            <tr>
+                <td class="metric">🌧️ 24hr Rain</td>
+                <td class="tempest"><span class="rain">-- mm</span></td>
+                <td class="davis"><span class="rain">-- mm</span></td>
+                <td class="mean"><span class="rain">-- mm</span></td>
+            </tr>
+        </tbody>
+    </table>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -213,16 +166,9 @@
                 return directions[index];
             }
 
-            // Function to update DOM for a station
-            function updateStation(selector, data) {
-                const rows = document.querySelectorAll(`${selector} .weather-row`);
-                rows[0].querySelector('.temp').textContent = `${data.temp.toFixed(1)} °C`;
-                rows[1].querySelector('.dew').textContent = `${data.dew.toFixed(1)} °C`;
-                rows[2].querySelector('.pressure').textContent = `${data.pressure.toFixed(1)} hPa`;
-                rows[3].querySelector('.wind_speed').textContent = `${data.windSpeed.toFixed(1)} mph`;
-                rows[4].querySelector('.wind_dir').textContent = `${data.windDir}° (${data.windDirText})`;
-                rows[5].querySelector('.humidity').textContent = `${data.humidity} %`;
-                rows[6].querySelector('.rain').textContent = `${data.rain.toFixed(1)} mm`;
+            // Function to update a value in the table
+            function updateValue(selector, value) {
+                document.querySelector(selector).textContent = value;
             }
 
             // Async function to load data
@@ -238,47 +184,71 @@
                     const tempestJson = await tempestResponse.json();
                     const obs = tempestJson.obs[0];
                     const tempestData = {
-                        temp: obs.air_temperature,
-                        dew: calculateDewPoint(obs.air_temperature, obs.relative_humidity),
-                        pressure: obs.station_pressure,
-                        windSpeed: obs.wind_avg * 2.23694, // m/s to mph
-                        windDir: obs.wind_direction,
-                        windDirText: getWindDirection(obs.wind_direction),
-                        humidity: obs.relative_humidity,
-                        rain: obs.precip_accum_local_day,
+                        temp: obs.air_temperature.toFixed(1) + ' °C',
+                        dew: calculateDewPoint(obs.air_temperature, obs.relative_humidity).toFixed(1) + ' °C',
+                        pressure: obs.station_pressure.toFixed(1) + ' hPa',
+                        windSpeed: (obs.wind_avg * 2.23694).toFixed(1) + ' mph',
+                        windDir: obs.wind_direction + '° (' + getWindDirection(obs.wind_direction) + ')',
+                        humidity: obs.relative_humidity + ' %',
+                        rain: obs.precip_accum_local_day.toFixed(1) + ' mm',
                         ts: obs.timestamp
                     };
 
-                    // Update Tempest
-                    updateStation('.tempest', tempestData);
+                    // Update Tempest values
+                    updateValue('.tempest .temp', tempestData.temp);
+                    updateValue('.tempest .dew', tempestData.dew);
+                    updateValue('.tempest .pressure', tempestData.pressure);
+                    updateValue('.tempest .wind_speed', tempestData.windSpeed);
+                    updateValue('.tempest .wind_dir', tempestData.windDir);
+                    updateValue('.tempest .humidity', tempestData.humidity);
+                    updateValue('.tempest .rain', tempestData.rain);
 
                     // Fetch Davis data via Netlify proxy function
                     const davisResponse = await fetch('/.netlify/functions/davis-proxy');
                     if (!davisResponse.ok) throw new Error('Davis proxy request failed');
-                    const davisData = await davisResponse.json();
-                    davisData.windDirText = getWindDirection(davisData.windDir);
-
-                    // Update Davis
-                    updateStation('.davis', davisData);
-
-                    // Calculate mean values
-                    const meanData = {
-                        temp: (tempestData.temp + davisData.temp) / 2,
-                        dew: (tempestData.dew + davisData.dew) / 2,
-                        pressure: (tempestData.pressure + davisData.pressure) / 2,
-                        windSpeed: (tempestData.windSpeed + davisData.windSpeed) / 2,
-                        windDir: Math.round((tempestData.windDir + davisData.windDir) / 2),
-                        windDirText: getWindDirection((tempestData.windDir + davisData.windDir) / 2),
-                        humidity: Math.round((tempestData.humidity + davisData.humidity) / 2),
-                        rain: (tempestData.rain + davisData.rain) / 2,
-                        ts: Math.max(tempestData.ts, davisData.ts)
+                    const davisJson = await davisResponse.json();
+                    const davisData = {
+                        temp: davisJson.temp.toFixed(1) + ' °C',
+                        dew: davisJson.dew.toFixed(1) + ' °C',
+                        pressure: davisJson.pressure.toFixed(1) + ' hPa',
+                        windSpeed: davisJson.windSpeed.toFixed(1) + ' mph',
+                        windDir: davisJson.windDir + '° (' + getWindDirection(davisJson.windDir) + ')',
+                        humidity: davisJson.humidity + ' %',
+                        rain: davisJson.rain.toFixed(1) + ' mm',
+                        ts: davisJson.ts
                     };
 
-                    // Update Mean
-                    updateStation('.mean', meanData);
+                    // Update Davis values
+                    updateValue('.davis .temp', davisData.temp);
+                    updateValue('.davis .dew', davisData.dew);
+                    updateValue('.davis .pressure', davisData.pressure);
+                    updateValue('.davis .wind_speed', davisData.windSpeed);
+                    updateValue('.davis .wind_dir', davisData.windDir);
+                    updateValue('.davis .humidity', davisData.humidity);
+                    updateValue('.davis .rain', davisData.rain);
+
+                    // Calculate mean values
+                    const meanTemp = ((obs.air_temperature + davisJson.temp) / 2).toFixed(1) + ' °C';
+                    const meanDew = ((calculateDewPoint(obs.air_temperature, obs.relative_humidity) + davisJson.dew) / 2).toFixed(1) + ' °C';
+                    const meanPressure = ((obs.station_pressure + davisJson.pressure) / 2).toFixed(1) + ' hPa';
+                    const meanWindSpeed = (((obs.wind_avg * 2.23694) + davisJson.windSpeed) / 2).toFixed(1) + ' mph';
+                    const meanWindDirDeg = Math.round((obs.wind_direction + davisJson.windDir) / 2);
+                    const meanWindDir = meanWindDirDeg + '° (' + getWindDirection(meanWindDirDeg) + ')';
+                    const meanHumidity = Math.round((obs.relative_humidity + davisJson.humidity) / 2) + ' %';
+                    const meanRain = ((obs.precip_accum_local_day + davisJson.rain) / 2).toFixed(1) + ' mm';
+                    const meanTs = Math.max(obs.timestamp, davisJson.ts);
+
+                    // Update Mean values
+                    updateValue('.mean .temp', meanTemp);
+                    updateValue('.mean .dew', meanDew);
+                    updateValue('.mean .pressure', meanPressure);
+                    updateValue('.mean .wind_speed', meanWindSpeed);
+                    updateValue('.mean .wind_dir', meanWindDir);
+                    updateValue('.mean .humidity', meanHumidity);
+                    updateValue('.mean .rain', meanRain);
 
                     // Update last collected time
-                    const updateTime = new Date(meanData.ts * 1000).toLocaleString();
+                    const updateTime = new Date(meanTs * 1000).toLocaleString();
                     lastUpdated.textContent = `Last updated: ${updateTime}`;
 
                     loading.textContent = 'Data loaded!';
